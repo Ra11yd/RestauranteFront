@@ -1,0 +1,168 @@
+/* src/pages/Admin.css */
+
+/* --- Estilos Gerais do Container do Admin --- */
+.admin-container {
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+.admin-header {
+    color: var(--cor-secundaria-amarelo);
+    border-bottom: 2px solid var(--cor-borda-cinza);
+    padding-bottom: 1rem;
+    margin-bottom: 2rem;
+}
+
+/* --- Estilos para a Página de Pedidos (/admin) --- */
+.order-card {
+    background-color: var(--cor-card-fundo);
+    border: 1px solid var(--cor-borda-cinza);
+    border-left: 5px solid var(--cor-secundaria-amarelo);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.order-card h3 { color: var(--cor-texto-claro); margin-top: 0; }
+.order-card p { color: var(--cor-texto-secundaria); margin: 0.5rem 0; }
+.order-card strong { color: #e0e0e0; }
+.order-card .status-text {
+    font-weight: bold; padding: 0.25rem 0.5rem; border-radius: 4px;
+    color: white; font-size: 0.9rem;
+}
+.order-card ul { list-style: none; padding-left: 1rem; margin-top: 0.5rem; border-left: 2px dotted var(--cor-borda-cinza); }
+.order-card .total-price { color: var(--cor-botao-whatsapp); font-size: 1.25rem; font-weight: bold; text-align: right; margin-top: 1rem; }
+.order-actions button {
+    background-color: #444; color: white; border: 1px solid #666;
+    padding: 8px 12px; margin-right: 8px; margin-top: 8px;
+    border-radius: 5px; cursor: pointer; transition: background-color 0.2s;
+}
+.order-actions button:hover { background-color: #555; }
+
+/* --- Estilos para os Cards de Estatísticas --- */
+.stats-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+.stat-card {
+  background-color: var(--cor-card-fundo);
+  padding: 1.5rem;
+  border-radius: 8px;
+  text-align: center;
+  border: 1px solid var(--cor-borda-cinza);
+  border-left: 5px solid var(--cor-secundaria-amarelo);
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: transform 0.2s ease-in-out;
+}
+.stat-card:hover { transform: translateY(-5px); }
+.stat-card h4 { color: var(--cor-texto-claro); font-size: 2.25rem; margin: 0 0 0.5rem 0; }
+.stat-card p { color: var(--cor-texto-secundaria); margin: 0; font-size: 1rem; font-weight: bold; }
+
+/* --- Estilos para Páginas de Gerenciamento (Formulários e Tabelas) --- */
+.admin-form-container {
+    background-color: var(--cor-card-fundo);
+    border: 1px solid var(--cor-borda-cinza);
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+.admin-form-container h3 {
+    color: var(--cor-secundaria-amarelo);
+    margin-top: 0;
+    border-bottom: 1px solid var(--cor-borda-cinza);
+    padding-bottom: 1rem;
+    margin-bottom: 1rem;
+}
+.admin-form-container input,
+.admin-form-container textarea,
+.admin-form-container select {
+    width: 100%; padding: 0.7rem; border-radius: 6px;
+    border: 1px solid var(--cor-borda-cinza); background-color: var(--cor-fundo-escuro);
+    color: var(--cor-texto-claro); font-size: 1rem; margin-top: 0.25rem;
+    box-sizing: border-box;
+}
+.admin-form-container label { font-weight: bold; font-size: 0.9rem; color: var(--cor-texto-secundaria); }
+
+.admin-table {
+    width: 100%; border-collapse: collapse; margin-top: 2rem;
+    background-color: var(--cor-card-fundo);
+    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+}
+.admin-table th, .admin-table td { border: 1px solid var(--cor-borda-cinza); padding: 0.75rem; text-align: left; vertical-align: middle; }
+.admin-table th { background-color: #333; color: var(--cor-secundaria-amarelo); font-size: 1.1rem; }
+.admin-table td { color: var(--cor-texto-secundaria); }
+
+.action-btn {
+    border: none; padding: 8px 12px; margin-right: 5px; border-radius: 5px;
+    color: white; cursor: pointer; font-weight: bold; transition: opacity 0.2s;
+}
+.action-btn:hover { opacity: 0.8; }
+.btn-edit { background-color: #1E90FF; }
+.btn-delete { background-color: var(--cor-primaria-vermelho); }
+.btn-add {
+    padding: 10px 20px; background: #28a745; border: none;
+    color: white; font-size: 1rem; font-weight: bold;
+    border-radius: 5px; cursor: pointer; transition: background-color 0.2s;
+}
+.btn-add:hover { background-color: #218838; }
+
+/* --- ESTILOS PARA MODAL (A CORREÇÃO) --- */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.7);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1050; /* Garante que o modal fique na frente de tudo */
+}
+.modal-content {
+  background: var(--cor-card-fundo);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid var(--cor-borda-cinza);
+  width: 90%;
+  max-width: 500px;
+  color: var(--cor-texto-claro);
+}
+.modal-content h2 { color: var(--cor-secundaria-amarelo); margin-top: 0; margin-bottom: 1.5rem; }
+.modal-content input, .modal-content button { font-size: 1rem; padding: 0.7rem; border-radius: 5px; }
+.modal-content button.btn-add { background-color: var(--cor-primaria-vermelho); }
+.modal-content button.btn-add:hover { background-color: var(--cor-hover-vermelho); }
+/* Adicione ao final de src/pages/Admin.css */
+
+.status-filter-buttons {
+  display: flex;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.status-filter-buttons button {
+  border: 1px solid var(--cor-borda-cinza);
+  background-color: #444;
+  color: var(--cor-texto-secundaria);
+  padding: 8px 16px;
+  border-radius: 20px; /* Deixa os botões arredondados */
+  cursor: pointer;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.status-filter-buttons button:hover {
+  background-color: #555;
+  color: var(--cor-texto-claro);
+}
+
+/* Estilo para o botão que está ATIVO */
+.status-filter-buttons button.active {
+  background-color: var(--cor-secundaria-amarelo);
+  color: var(--cor-fundo-escuro);
+  border-color: var(--cor-secundaria-amarelo);
+}
