@@ -1,4 +1,4 @@
-import { Routes, Route } from 'react-router-dom';
+import { Routes, Route, Navigate } from 'react-router-dom'; // 1. Importa o "Navigate"
 
 // Importação dos Layouts e Páginas
 import AdminLayout from './layouts/AdminLayout';
@@ -25,8 +25,11 @@ import SuperAdminRoute from './components/SuperAdminRoute';
 
 function App() {
   return (
-    // O <Router> foi removido daqui
+    // O <Router> foi removido daqui, pois já está em main.jsx
     <Routes>
+      {/* 2. ROTA ADICIONADA: Redireciona a raiz "/" para a página de login */}
+      <Route path="/" element={<Navigate to="/login" replace />} />
+
       {/* --- Rotas Públicas --- */}
       <Route path="/loja/:slug" element={<StorePage />} />
       <Route path="/salao/:slug" element={<SalonPage />} />
