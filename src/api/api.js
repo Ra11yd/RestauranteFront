@@ -4,7 +4,7 @@ import axios from 'axios';
 
 // Cria uma instância do axios com configurações base
 const api = axios.create({
-  baseURL: 'https://restauranteapi-bhx8.onrender.com',
+  baseURL: 'http://localhost:3333/api',
 });
 
 // A MÁGICA DO INTERCEPTOR
