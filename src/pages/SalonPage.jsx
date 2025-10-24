@@ -8,7 +8,7 @@ import ProductList from '../components/ProductList';
 import Cart from '../components/Cart';
 import Footer from '../components/Footer';
 import SalonCheckoutForm from '../components/SalonCheckoutForm';
-import CustomerAuthLinks from '../components/CustomerAuthLinks';
+// A importação de CustomerAuthLinks não é mais necessária aqui
 
 function SalonPage() {
   const { slug } = useParams();
@@ -65,9 +65,9 @@ function SalonPage() {
       items: cart.map(item => ({
         product: item._id,
         productName: item.name,
-        productPrice: item.price, // Salva o preço do item no momento do pedido
+        productPrice: item.price,
         quantity: item.quantity,
-        price: item.price, // Campo 'price' obrigatório no schema
+        price: item.price,
         details: [
           (item.selectedAddOns?.length > 0 ? `Adicionais: ${item.selectedAddOns.map(a => `${a.quantity}x ${a.name}`).join(', ')}` : ''),
           (item.observation ? `Obs: ${item.observation}` : '')
@@ -99,14 +99,18 @@ function SalonPage() {
 
   return (
     <div className={themeClass}>
-      <CategoryList categories={menuData.categories} onCategorySelect={setSelectedCategory} selectedCategory={selectedCategory} />
+      <CategoryList 
+        categories={menuData.categories} 
+        onCategorySelect={setSelectedCategory} 
+        selectedCategory={selectedCategory} 
+      />
+      
       <header className="site-header">
-        <div style={{ position: 'absolute', top: '10px', right: '20px', zIndex: '1001' }}>
-          <CustomerAuthLinks />
-        </div>
+        {/* Links de autenticação removidos daqui */}
         <img src={menuData.settings.logoUrl || '/default-logo.png'} alt="Logo" className="main-logo" />
         <h1>{menuData.settings.restaurantName}</h1>
       </header>
+
       <main>
         <ProductList 
           allProducts={menuData.products} 
@@ -115,6 +119,7 @@ function SalonPage() {
           categories={menuData.categories}
         />
       </main>
+
       <div className={`overlay-carrinho ${isCartOpen ? 'ativo' : ''}`} onClick={closeCart}></div>
       <aside id="carrinho" className={isCartOpen ? 'aberto' : ''}>
         <Cart 
