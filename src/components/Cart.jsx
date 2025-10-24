@@ -1,15 +1,18 @@
 import React from 'react';
+import { useCustomerAuth } from '../context/CustomerAuthContext';
+import CustomerAuthLinks from './CustomerAuthLinks';
 
 function Cart({ cartItems, onClose, deliveryFee = 0, onUpdateQuantity, onDeleteItem }) {
-  // Cálculo seguro dos totais
-  const itemsTotal = cartItems.reduce((sum, item) => (
-    sum + (Number(item.price || 0) * Number(item.quantity || 0))
-  ), 0);
-
-  const finalTotal = itemsTotal + Number(deliveryFee || 0);
+  const itemsTotal = cartItems.reduce((sum, item) => (sum + (item.price * item.quantity)), 0);
+  const finalTotal = itemsTotal + deliveryFee;
 
   return (
     <div>
+      {/* --- LINKS DE AUTENTICAÇÃO ADICIONADOS AQUI --- */}
+      <div style={{ padding: '0 0 1.5rem 0', borderBottom: '1px solid var(--cor-borda-cinza)', marginBottom: '1.5rem' }}>
+        <CustomerAuthLinks />
+      </div>
+      
       <h3 style={{ textAlign: 'center', fontSize: '1.5rem', marginBottom: '1.5rem' }}>Seu Carrinho</h3>
       
       {cartItems.length === 0 ? (
@@ -34,8 +37,8 @@ function Cart({ cartItems, onClose, deliveryFee = 0, onUpdateQuantity, onDeleteI
               </div>
 
               <span className="preco-produto" style={{textAlign: 'right', marginTop: '8px', color: 'white'}}>
-                {item.quantity} x R$ {Number(item.price || 0).toFixed(2).replace('.', ',')} = 
-                <strong> R$ {(Number(item.price || 0) * Number(item.quantity || 0)).toFixed(2).replace('.', ',')}</strong>
+                {item.quantity} x R$ {item.price.toFixed(2).replace('.', ',')} = 
+                <strong> R$ {(item.price * item.quantity).toFixed(2).replace('.', ',')}</strong>
               </span>
 
               <div className="quantidade-controle">
@@ -51,13 +54,15 @@ function Cart({ cartItems, onClose, deliveryFee = 0, onUpdateQuantity, onDeleteI
 
       {cartItems.length > 0 && (
         <div style={{marginTop: '1.5rem', textAlign: 'right', borderTop: '1px solid #444', paddingTop: '1rem'}}>
-          <p>Total dos Itens: R$ {Number(itemsTotal).toFixed(2).replace('.', ',')}</p>
-          <p>Taxa de Entrega: R$ {Number(deliveryFee || 0).toFixed(2).replace('.', ',')}</p>
-          <p id="total-carrinho">
-            Total do Pedido: R$ {Number(finalTotal).toFixed(2).replace('.', ',')}
-          </p>
+            <p>Total dos Itens: R$ {itemsTotal.toFixed(2).replace('.', ',')}</p>
+            <p>Taxa de Entrega: R$ {deliveryFee.toFixed(2).replace('.', ',')}</p>
+            <p id="total-carrinho">
+              Total do Pedido: R$ {finalTotal.toFixed(2).replace('.', ',')}
+            </p>
         </div>
       )}
+      
+      {/* O CheckoutForm será renderizado pela StorePage/SalonPage abaixo deste componente */}
       
       <button onClick={onClose} className="btn-fechar-carrinho" style={{width: '100%', marginTop: '1rem', border: 'none'}}>
         Fechar Carrinho
