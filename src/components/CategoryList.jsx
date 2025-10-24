@@ -1,7 +1,7 @@
 import React from 'react';
 
-// Usamos categories = [] para garantir que, se a prop vier vazia, o .map não quebre.
-function CategoryList({ categories = [], onCategorySelect, selectedCategory }) {
+// Adicionamos 'children' como uma prop
+function CategoryList({ categories = [], onCategorySelect, selectedCategory, children }) {
 
   return (
     <nav className="menu-categorias-bar">
@@ -11,16 +11,18 @@ function CategoryList({ categories = [], onCategorySelect, selectedCategory }) {
             key={category._id}
             href={`#${category.name.toLowerCase().replace(/\s+/g, '-')}`}
             onClick={(e) => {
-              e.preventDefault(); // Impede que a página pule para a âncora
+              e.preventDefault();
               onCategorySelect(category._id);
             }}
-            // Aplica a classe 'active' se o ID desta categoria for o mesmo que está selecionado
             className={selectedCategory === category._id ? 'active' : ''}
           >
             {category.name}
           </a>
         ))}
       </div>
+      
+      {/* Renderiza qualquer 'filho' que for passado (nossos links) */}
+      {children}
     </nav>
   );
 }
