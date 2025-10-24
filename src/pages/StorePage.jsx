@@ -14,17 +14,7 @@ function StorePage() {
   const { slug } = useParams();
   const navigate = useNavigate();
   const { customer } = useCustomerAuth();
-  const { 
-    cart, 
-    setCart,
-    isCartOpen, 
-    addToCart, 
-    updateQuantity, 
-    deleteItem,
-    openCart,
-    closeCart,
-    totalItemsInCart
-  } = useCart();
+  const { cart, setCart, isCartOpen, addToCart, updateQuantity, deleteItem, openCart, closeCart, totalItemsInCart } = useCart();
 
   const [menuData, setMenuData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -51,14 +41,12 @@ function StorePage() {
       const zone = menuData.deliveryZones.find(z => z.name === neighborhoodName);
       setDeliveryFee(zone ? zone.fee : 0);
   };
-
   const handleCheckout = async (customerData) => {
     if (cart.length === 0) return alert("Seu carrinho está vazio!");
     if (!menuData.settings?.companyId) return alert("Erro de configuração da loja.");
 
-    const itemsTotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+    const itemsTotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
     const finalTotal = itemsTotal + deliveryFee;
-    
     const orderPayload = {
       customerName: customerData.name,
       customerPhone: customerData.phone,
@@ -75,7 +63,7 @@ function StorePage() {
         return { 
           product: item._id, 
           productName: item.name, 
-          productPrice: item.price, // Preço total do item (com adicionais)
+          productPrice: item.price, 
           quantity: item.quantity, 
           price: item.price, // Campo 'price' obrigatório no schema
           details: detailsArray.filter(Boolean).join('; ') 
@@ -84,7 +72,6 @@ function StorePage() {
       customerId: customer ? customer.id : null,
       companyId: menuData.settings.companyId
     };
-
     try {
       const response = await api.post('/orders', orderPayload);
       const newOrder = response.data;
@@ -119,45 +106,26 @@ function StorePage() {
 
   return (
     <div className={themeClass}>
-      <CategoryList 
-        categories={menuData.categories} 
-        onCategorySelect={handleCategorySelect} 
-        selectedCategory={selectedCategory}
-      >
-        <CustomerAuthLinks />
-      </CategoryList>
-      
+      <CategoryList categories={menuData.categories} onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
       {menuData.settings && (
         <header className="site-header">
+          <div style={{ position: 'absolute', top: '10px', right: '20px', zIndex: '1001' }}>
+            <CustomerAuthLinks />
+          </div>
           <img src={menuData.settings.logoUrl || "/default-logo.png"} alt={`${menuData.settings.restaurantName} Logo`} className="main-logo" />
           <h1>{menuData.settings.restaurantName}</h1>
         </header>
       )}
       <main style={{ minHeight: '60vh' }}>
-        <ProductList 
-          categoryId={selectedCategory} 
-          onAddToCart={addToCart} 
-          allProducts={menuData.products} 
-          categories={menuData.categories} 
-        />
+        <ProductList categoryId={selectedCategory} onAddToCart={addToCart} allProducts={menuData.products} categories={menuData.categories} />
       </main>
       <div className={`overlay-carrinho ${isCartOpen ? 'ativo' : ''}`} onClick={closeCart}></div>
       <aside id="carrinho" className={isCartOpen ? 'aberto' : ''}>
-        <Cart 
-          cartItems={cart} 
-          onClose={closeCart} 
-          deliveryFee={deliveryFee} 
-          onUpdateQuantity={updateQuantity} 
-          onDeleteItem={deleteItem}
-        />
+        <Cart cartItems={cart} onClose={closeCart} deliveryFee={deliveryFee} onUpdateQuantity={updateQuantity} onDeleteItem={deleteItem}/>
         {cart.length > 0 && (
             <>
                 <hr style={{ margin: '20px 0', borderColor: '#444' }}/>
-                <CheckoutForm 
-                  onCheckout={handleCheckout} 
-                  onNeighborhoodChange={handleNeighborhoodChange} 
-                  deliveryZones={menuData.deliveryZones}
-                />
+                <CheckoutForm onCheckout={handleCheckout} onNeighborhoodChange={handleNeighborhoodChange} deliveryZones={menuData.deliveryZones}/>
             </>
         )}
       </aside>
