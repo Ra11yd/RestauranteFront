@@ -3,7 +3,7 @@ import axios from 'axios';
 // 1. Lê a URL da API a partir das variáveis de ambiente.
 //    Em produção (Render), ele usará a VITE_API_BASE_URL (https://.../api)
 //    Em desenvolvimento (local), ele usará o 'http://localhost:3333/api'
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'http://localhost:3333/api';
+const API_URL = import.meta.env.VITE_API_BASE_URL || 'https://restauranteapi-bhx8.onrender.com/api';
 
 const api = axios.create({
   baseURL: API_URL
@@ -24,3 +24,4 @@ api.interceptors.request.use(
 );
 
 export default api;
+
