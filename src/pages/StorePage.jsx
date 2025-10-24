@@ -8,7 +8,7 @@ import ProductList from '../components/ProductList';
 import Cart from '../components/Cart';
 import CheckoutForm from '../components/CheckoutForm';
 import Footer from '../components/Footer';
-import CustomerAuthLinks from '../components/CustomerAuthLinks';
+// A importação de CustomerAuthLinks não é mais necessária aqui
 
 function StorePage() {
   const { slug } = useParams();
@@ -60,14 +60,7 @@ function StorePage() {
         let detailsArray = [];
         if (item.selectedAddOns?.length > 0) detailsArray.push(`Adicionais: ${item.selectedAddOns.map(a => `${a.quantity}x ${a.name}`).join(', ')}`);
         if (item.observation) detailsArray.push(`Obs: ${item.observation}`);
-        return { 
-          product: item._id, 
-          productName: item.name, 
-          productPrice: item.price, 
-          quantity: item.quantity, 
-          price: item.price, // Campo 'price' obrigatório no schema
-          details: detailsArray.filter(Boolean).join('; ') 
-        };
+        return { product: item._id, productName: item.name, productPrice: item.price, quantity: item.quantity, price: item.price, details: detailsArray.filter(Boolean).join('; ') };
       }),
       customerId: customer ? customer.id : null,
       companyId: menuData.settings.companyId
@@ -109,9 +102,7 @@ function StorePage() {
       <CategoryList categories={menuData.categories} onCategorySelect={handleCategorySelect} selectedCategory={selectedCategory} />
       {menuData.settings && (
         <header className="site-header">
-          <div style={{ position: 'absolute', top: '10px', right: '20px', zIndex: '1001' }}>
-            <CustomerAuthLinks />
-          </div>
+          {/* Links de autenticação removidos daqui */}
           <img src={menuData.settings.logoUrl || "/default-logo.png"} alt={`${menuData.settings.restaurantName} Logo`} className="main-logo" />
           <h1>{menuData.settings.restaurantName}</h1>
         </header>
