@@ -1,18 +1,19 @@
+// src/api/api.js
+
 import axios from 'axios';
 
-// 1. Lê a URL da API a partir das variáveis de ambiente.
-//    Em produção (Render), ele usará a VITE_API_BASE_URL (https://.../api).
-//    Em desenvolvimento (local), ele usará o 'http://localhost:3333/api'.
-const API_URL = import.meta.env.VITE_API_BASE_URL || 'https://restauranteapi-bhx8.onrender.com';
-
+// Cria uma instância do axios com configurações base
 const api = axios.create({
-  baseURL: API_URL
+  baseURL: 'http://localhost:3333/api',
 });
 
-// 2. Interceptor para adicionar o token de admin em todas as requisições
+// A MÁGICA DO INTERCEPTOR
+// Isso adiciona um "guarda" que intercepta TODA requisição antes dela ser enviada.
 api.interceptors.request.use(
   (config) => {
+    // Pega o token do localStorage
     const token = localStorage.getItem('token');
+    // Se o token existir, adiciona o cabeçalho de autenticação
     if (token) {
       config.headers['x-auth-token'] = token;
     }
